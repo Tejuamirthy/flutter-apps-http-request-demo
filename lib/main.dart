@@ -109,3 +109,107 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
+
+class ResponseClass {
+  Response response;
+
+  ResponseClass({this.response});
+
+  ResponseClass.fromJson(Map<String, dynamic> json) {
+    response = json['response'] != null
+        ? new Response.fromJson(json['response'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.response != null) {
+      data['response'] = this.response.toJson();
+    }
+    return data;
+  }
+}
+
+class Response {
+  int numFound;
+  int start;
+  double maxScore;
+  List<Docs> docs;
+
+  Response({this.numFound, this.start, this.maxScore, this.docs});
+
+  Response.fromJson(Map<String, dynamic> json) {
+    numFound = json['numFound'];
+    start = json['start'];
+    maxScore = json['maxScore'];
+    if (json['docs'] != null) {
+      docs = new List<Docs>();
+      json['docs'].forEach((v) {
+        docs.add(new Docs.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['numFound'] = this.numFound;
+    data['start'] = this.start;
+    data['maxScore'] = this.maxScore;
+    if (this.docs != null) {
+      data['docs'] = this.docs.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Docs {
+  String id;
+  String journal;
+  String eissn;
+  String publicationDate;
+  String articleType;
+  List<String> authorDisplay;
+  List<String> abstract;
+  String titleDisplay;
+  double score;
+
+  Docs(
+      {this.id,
+      this.journal,
+      this.eissn,
+      this.publicationDate,
+      this.articleType,
+      this.authorDisplay,
+      this.abstract,
+      this.titleDisplay,
+      this.score});
+
+  Docs.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    journal = json['journal'];
+    eissn = json['eissn'];
+    publicationDate = json['publication_date'];
+    articleType = json['article_type'];
+    authorDisplay = json['author_display'].cast<String>();
+    abstract = json['abstract'].cast<String>();
+    titleDisplay = json['title_display'];
+    score = json['score'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['journal'] = this.journal;
+    data['eissn'] = this.eissn;
+    data['publication_date'] = this.publicationDate;
+    data['article_type'] = this.articleType;
+    data['author_display'] = this.authorDisplay;
+    data['abstract'] = this.abstract;
+    data['title_display'] = this.titleDisplay;
+    data['score'] = this.score;
+    return data;
+  }
+}
